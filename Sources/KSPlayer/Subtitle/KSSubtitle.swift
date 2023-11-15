@@ -185,9 +185,10 @@ public extension KSSubtitle {
                 break
             }
         }
-        guard let subtitle = string else {
+        guard var subtitle = string else {
             throw NSError(errorCode: .subtitleUnEncoding)
         }
+        subtitle = subtitle.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil)
         let scanner = Scanner(string: subtitle)
         _ = scanner.scanCharacters(from: .controlCharacters)
         let parse = KSOptions.subtitleParses.first { $0.canParse(scanner: scanner) }
