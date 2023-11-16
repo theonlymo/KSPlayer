@@ -210,6 +210,10 @@ extension KSVideoPlayer: UIViewRepresentable {
     }
 }
 
+public extension Notification.Name {
+    static let KSVideoPlayerNativeVideoSubtitlesExtracted = Notification.Name(rawValue: "KSVideoPlayerNativeVideoSubtitlesExtracted")
+}
+
 extension KSVideoPlayer.Coordinator: KSPlayerLayerDelegate {
     public func player(layer: KSPlayerLayer, state: KSPlayerState) {
         if state == .readyToPlay {
@@ -222,7 +226,10 @@ extension KSVideoPlayer.Coordinator: KSPlayerLayerDelegate {
                     if self.subtitleModel.selectedSubtitleInfo == nil, layer.options.autoSelectEmbedSubtitle {
                         self.subtitleModel.selectedSubtitleInfo = subtitleDataSouce.infos.first { $0.isEnabled }
                     }
+                    NotificationCenter.default.post(name: .KSVideoPlayerNativeVideoSubtitlesExtracted, object: nil)
                 }
+            } else {
+                NotificationCenter.default.post(name: .KSVideoPlayerNativeVideoSubtitlesExtracted, object: nil)
             }
         } else if state == .bufferFinished {
             isMaskShow = false
