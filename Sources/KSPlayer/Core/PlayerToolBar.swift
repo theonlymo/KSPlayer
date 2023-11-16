@@ -25,14 +25,20 @@ public class PlayerToolBar: UIStackView {
     public let definitionButton = UIButton()
     public let pipButton = UIButton()
     public var onFocusUpdate: ((_ cofusedItem: UIView) -> Void)?
+    public var isReminingTime: Bool = false
     public var timeType = TimeType.minOrHour {
         didSet {
             if timeType != oldValue {
                 let currentTimeText = currentTime.toString(for: timeType)
                 let totalTimeText = totalTime.toString(for: timeType)
+                let reminingTime = (totalTime - currentTime).toString(for: timeType)
                 currentTimeLabel.text = currentTimeText
                 totalTimeLabel.text = totalTimeText
-                timeLabel.text = "\(currentTimeText) / \(totalTimeText)"
+                if isReminingTime {
+                    timeLabel.text = "-\(reminingTime)"
+                } else {
+                    timeLabel.text = "\(currentTimeText) / \(totalTimeText)"
+                }
             }
         }
     }
@@ -46,7 +52,12 @@ public class PlayerToolBar: UIStackView {
             if currentTime != oldValue {
                 let text = currentTime.toString(for: timeType)
                 currentTimeLabel.text = text
-                timeLabel.text = "\(text) / \(totalTime.toString(for: timeType))"
+                let reminingTime = (totalTime - currentTime).toString(for: timeType)
+                if isReminingTime {
+                    timeLabel.text = "-\(reminingTime)"
+                } else {
+                    timeLabel.text = "\(text) / \(totalTime.toString(for: timeType))"
+                }
                 if isLiveStream {
                     timeSlider.value = Float(todayInterval)
                 } else {
@@ -77,7 +88,12 @@ public class PlayerToolBar: UIStackView {
             if totalTime != oldValue {
                 let text = totalTime.toString(for: timeType)
                 totalTimeLabel.text = text
-                timeLabel.text = "\(currentTime.toString(for: timeType)) / \(text)"
+                let reminingTime = (totalTime - currentTime).toString(for: timeType)
+                if isReminingTime {
+                    timeLabel.text = reminingTime
+                } else {
+                    timeLabel.text = "\(currentTime.toString(for: timeType)) / \(text)"
+                }
                 timeSlider.maximumValue = Float(totalTime)
             }
             if isLiveStream {
@@ -107,6 +123,9 @@ public class PlayerToolBar: UIStackView {
     }
 
     private func initUI() {
+        timeLabel.isUserInteractionEnabled = true
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(timeTapped))
+        timeLabel.addGestureRecognizer(tapGesture)
         let focusColor = UIColor.white
         let tintColor = UIColor.gray
         distribution = .fill
@@ -219,6 +238,21 @@ public class PlayerToolBar: UIStackView {
         ])
         #endif
     }
+    @objc func timeTapped() {
+        isReminingTime.toggle()
+        let currentTimeText = currentTime.toString(for: timeType)
+        let totalTimeText = totalTime.toString(for: timeType)
+        let reminingTime = (totalTime - currentTime).toString(for: timeType)
+        currentTimeLabel.text = currentTimeText
+        totalTimeLabel.text = totalTimeText
+        if isReminingTime {
+            timeLabel.text = "-\(reminingTime)"
+        } else {
+            timeLabel.text = "\(currentTimeText) / \(totalTimeText)"
+
+        }
+    }
+
 
     override public func addArrangedSubview(_ view: UIView) {
         super.addArrangedSubview(view)
