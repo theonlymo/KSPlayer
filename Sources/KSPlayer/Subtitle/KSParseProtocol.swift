@@ -354,13 +354,11 @@ public class VTTParse: KSParseProtocol {
      简中封装 by Q66
      */
     public func parsePart(scanner: Scanner) -> SubtitlePart? {
-        _ = scanner.scanUpToCharacters(from: .newlines)
-        let startString = scanner.scanUpToString("-->")
-        // skip spaces and newlines by default.
+        let startString = scanner.scanUpToString(" --> ")?.components(separatedBy: "\n").last
         _ = scanner.scanString("-->")
         if let startString,
            let endString = scanner.scanUpToCharacters(from: .newlines),
-           let text = scanner.scanUpToCharacters(from: .newlines)
+           let text = scanner.scanUpToString("\n\n")
         {
             var textPosition = TextPosition()
             return SubtitlePart(startString.parseDuration(), endString.parseDuration(), attributedString: text.build(textPosition: &textPosition))
