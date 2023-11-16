@@ -426,7 +426,7 @@ extension VideoPlayerView {
         }
         let videoTracks = playerLayer?.player.tracks(mediaType: .video) ?? []
         toolBar.videoSwitchButton.setMenu(title: NSLocalizedString("switch video", comment: ""), current: videoTracks.first(where: { $0.isEnabled }), list: videoTracks) { value in
-            value.name + " \(value.naturalSize.width)x\(value.naturalSize.height)"
+            value.description
         } completition: { [weak self] value in
             guard let self else { return }
             if let value {
@@ -435,7 +435,7 @@ extension VideoPlayerView {
         }
         let audioTracks = playerLayer?.player.tracks(mediaType: .audio) ?? []
         toolBar.audioSwitchButton.setMenu(title: NSLocalizedString("switch audio", comment: ""), current: audioTracks.first(where: { $0.isEnabled }), list: audioTracks) { value in
-            value.name
+            value.description
         } completition: { [weak self] value in
             guard let self else { return }
             if let value {
@@ -451,7 +451,7 @@ extension VideoPlayerView {
             }
         }
         toolBar.srtButton.setMenu(title: NSLocalizedString("subtitle", comment: ""), current: srtControl.selectedSubtitleInfo, list: srtControl.subtitleInfos, addDisabled: true) { value in
-            value.name
+            value.subtitleID + " - " + value.name
         } completition: { [weak self] value in
             guard let self else { return }
             self.srtControl.selectedSubtitleInfo = value

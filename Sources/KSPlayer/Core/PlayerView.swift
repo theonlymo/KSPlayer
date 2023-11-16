@@ -130,7 +130,6 @@ open class PlayerView: UIView, KSPlayerLayerDelegate, KSSliderDelegate {
     open func play() {
         becomeFirstResponder()
         playerLayer?.play()
-        toolBar.playButton.isSelected = true
     }
 
     open func pause() {
@@ -170,9 +169,11 @@ open class PlayerView: UIView, KSPlayerLayerDelegate, KSSliderDelegate {
         delegate?.playerController(state: state)
         if state == .readyToPlay {
             totalTime = layer.player.duration
-            toolBar.isSeekable = layer.player.seekable
+//            toolBar.isSeekable = layer.player.seekable
         } else if state == .playedToTheEnd || state == .paused || state == .error {
             toolBar.playButton.isSelected = false
+        }else if state.isPlaying {
+            toolBar.playButton.isSelected = true
         }
     }
 
