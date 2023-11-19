@@ -153,6 +153,7 @@ public class AssParse: KSParseProtocol {
             return nil
         }
         text = text.replacingOccurrences(of: "\\N", with: "\n")
+        text = text.replacingOccurrences(of: "\\n", with: "\n")
         let part = SubtitlePart(start, end, attributedString: text.build(textPosition: &textPosition, attributed: attributes))
         part.textPosition = textPosition
         return part
@@ -242,8 +243,11 @@ extension String {
                 let twoChar = scanner.scanCharacter()
                 if twoChar == "c" {
                     let color = scanner.scanUpToCharacters(from: .newlines).flatMap(UIColor.init(assColor:))
-                    if char == "1" || char == "2" {
+                    if char == "1" {
                         attributes[.foregroundColor] = color
+                    } else if char == "2" {
+                        // 还不知道这个要设置到什么颜色上
+//                        attributes[.backgroundColor] = color
                     } else if char == "3" {
                         attributes[.strokeColor] = color
                     } else if char == "4" {
@@ -285,6 +289,10 @@ public extension [String: String] {
         // 创建字体样式
         if let assColor = self["PrimaryColour"] {
             attributes[.foregroundColor] = UIColor(assColor: assColor)
+        }
+        // 还不知道这个要设置到什么颜色上
+        if let assColor = self["SecondaryColour"] {
+//            attributes[.backgroundColor] = UIColor(assColor: assColor)
         }
         if self["Bold"] == "1" {
             attributes[.expansion] = 1
@@ -346,7 +354,13 @@ public extension [String: String] {
 
 public class VTTParse: KSParseProtocol {
     public func canParse(scanner: Scanner) -> Bool {
-        scanner.scanString("WEBVTT") != nil
+        let result = scanner.scanString("WEBVTT")
+        if result != nil {
+            scanner.charactersToBeSkipped = nil
+            return true
+        } else {
+            return false
+        }
     }
 
     /**
@@ -354,12 +368,26 @@ public class VTTParse: KSParseProtocol {
      简中封装 by Q66
      */
     public func parsePart(scanner: Scanner) -> SubtitlePart? {
-        let startString = scanner.scanUpToString(" --> ")?.components(separatedBy: "\n").last
+        _ = scanner.scanDecimal()
+        _ = scanner.scanCharacters(from: .newlines)
+        let startString = scanner.scanUpToString("-->")
+        // skip spaces and newlines by default.
         _ = scanner.scanString("-->")
         if let startString,
-           let endString = scanner.scanUpToCharacters(from: .newlines),
-           let text = scanner.scanUpToString("\n\n")
+           let endString = scanner.scanUpToCharacters(from: .newlines)
         {
+            _ = scanner.scanCharacters(from: .newlines)
+            var text = ""
+            var newLine: String? = nil
+            repeat {
+                if let str = scanner.scanUpToCharacters(from: .newlines) {
+                    text += str
+                }
+                newLine = scanner.scanCharacters(from: .newlines)
+                if newLine == "\n" {
+                    text += "\n"
+                }
+            } while newLine == "\n"
             var textPosition = TextPosition()
             return SubtitlePart(startString.parseDuration(), endString.parseDuration(), attributedString: text.build(textPosition: &textPosition))
         }
@@ -369,7 +397,11 @@ public class VTTParse: KSParseProtocol {
 
 public class SrtParse: KSParseProtocol {
     public func canParse(scanner: Scanner) -> Bool {
-        scanner.string.contains(" --> ")
+        let result = scanner.string.contains(" --> ")
+        if result {
+            scanner.charactersToBeSkipped = nil
+        }
+        return result
     }
 
     /**
@@ -378,14 +410,26 @@ public class SrtParse: KSParseProtocol {
      {\an4}慢慢来
      */
     public func parsePart(scanner: Scanner) -> SubtitlePart? {
-        _ = scanner.scanUpToCharacters(from: .newlines)
+        _ = scanner.scanDecimal()
+        _ = scanner.scanCharacters(from: .newlines)
         let startString = scanner.scanUpToString("-->")
         // skip spaces and newlines by default.
         _ = scanner.scanString("-->")
         if let startString,
-           let endString = scanner.scanUpToCharacters(from: .newlines),
-           let text = scanner.scanUpToCharacters(from: .newlines)
+           let endString = scanner.scanUpToCharacters(from: .newlines)
         {
+            _ = scanner.scanCharacters(from: .newlines)
+            var text = ""
+            var newLine: String? = nil
+            repeat {
+                if let str = scanner.scanUpToCharacters(from: .newlines) {
+                    text += str
+                }
+                newLine = scanner.scanCharacters(from: .newlines)
+                if newLine == "\n" {
+                    text += "\n"
+                }
+            } while newLine == "\n"
             var textPosition = TextPosition()
             return SubtitlePart(startString.parseDuration(), endString.parseDuration(), attributedString: text.build(textPosition: &textPosition))
         }
