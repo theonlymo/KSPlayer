@@ -354,13 +354,7 @@ public extension [String: String] {
 
 public class VTTParse: KSParseProtocol {
     public func canParse(scanner: Scanner) -> Bool {
-        let result = scanner.scanString("WEBVTT")
-        if result != nil {
-            scanner.charactersToBeSkipped = nil
-            return true
-        } else {
-            return false
-        }
+        scanner.scanString("WEBVTT") != nil
     }
 
     /**
@@ -368,26 +362,12 @@ public class VTTParse: KSParseProtocol {
      简中封装 by Q66
      */
     public func parsePart(scanner: Scanner) -> SubtitlePart? {
-        _ = scanner.scanDecimal()
-        _ = scanner.scanCharacters(from: .newlines)
-        let startString = scanner.scanUpToString("-->")
-        // skip spaces and newlines by default.
+        let startString = scanner.scanUpToString(" --> ")?.components(separatedBy: "\n").last
         _ = scanner.scanString("-->")
         if let startString,
-           let endString = scanner.scanUpToCharacters(from: .newlines)
+           let endString = scanner.scanUpToCharacters(from: .newlines),
+           let text = scanner.scanUpToString("\n\n")
         {
-            _ = scanner.scanCharacters(from: .newlines)
-            var text = ""
-            var newLine: String? = nil
-            repeat {
-                if let str = scanner.scanUpToCharacters(from: .newlines) {
-                    text += str
-                }
-                newLine = scanner.scanCharacters(from: .newlines)
-                if newLine == "\n" {
-                    text += "\n"
-                }
-            } while newLine == "\n"
             var textPosition = TextPosition()
             return SubtitlePart(startString.parseDuration(), endString.parseDuration(), attributedString: text.build(textPosition: &textPosition))
         }
