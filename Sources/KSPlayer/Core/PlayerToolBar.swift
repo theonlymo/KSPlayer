@@ -129,6 +129,7 @@ public class PlayerToolBar: UIStackView {
         let focusColor = UIColor.white
         let tintColor = UIColor.gray
         distribution = .fill
+        spacing = 4
         currentTimeLabel.textColor = UIColor(rgb: 0x9B9B9B)
         currentTimeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         currentTimeLabel.text = 0.toString(for: timeType)
@@ -140,6 +141,7 @@ public class PlayerToolBar: UIStackView {
         timeLabel.textAlignment = .left
         timeLabel.font = UIFont.monospacedDigitSystemFont(ofSize: 14, weight: .regular)
         timeLabel.text = "\(0.toString(for: timeType)) / \(0.toString(for: timeType))"
+        timeLabel.setContentHuggingPriority(.defaultLow, for: .horizontal)
         timeSlider.minimumValue = 0
         #if os(iOS)
         if #available(macCatalyst 15.0, iOS 15.0, *) {
@@ -155,6 +157,7 @@ public class PlayerToolBar: UIStackView {
         playButton.tag = PlayerButtonType.play.rawValue
         playButton.setTitleColor(focusColor, for: .focused)
         playButton.setTitleColor(tintColor, for: .normal)
+
         playbackRateButton.tag = PlayerButtonType.rate.rawValue
         playbackRateButton.titleFont = .systemFont(ofSize: 14, weight: .medium)
         playbackRateButton.setTitleColor(focusColor, for: .focused)
@@ -192,6 +195,12 @@ public class PlayerToolBar: UIStackView {
         }
         playButton.translatesAutoresizingMaskIntoConstraints = false
         srtButton.translatesAutoresizingMaskIntoConstraints = false
+        playButton.translatesAutoresizingMaskIntoConstraints = false
+        audioSwitchButton.translatesAutoresizingMaskIntoConstraints = false
+        videoSwitchButton.translatesAutoresizingMaskIntoConstraints = false
+        playbackRateButton.translatesAutoresizingMaskIntoConstraints = false
+        definitionButton.translatesAutoresizingMaskIntoConstraints = false
+
         translatesAutoresizingMaskIntoConstraints = false
         if #available(tvOS 14.0, *) {
             pipButton.isHidden = !AVPictureInPictureController.isPictureInPictureSupported()
@@ -220,7 +229,7 @@ public class PlayerToolBar: UIStackView {
             videoSwitchButton.widthAnchor.constraint(equalTo: videoSwitchButton.heightAnchor),
             srtButton.widthAnchor.constraint(equalTo: srtButton.heightAnchor),
             pipButton.widthAnchor.constraint(equalTo: pipButton.heightAnchor),
-            heightAnchor.constraint(equalToConstant: 40),
+            heightAnchor.constraint(equalToConstant: 40)
         ])
         #else
         timeSlider.tintColor = .white
@@ -232,11 +241,18 @@ public class PlayerToolBar: UIStackView {
         srtButton.tintColor = .white
         pipButton.tintColor = .white
         NSLayoutConstraint.activate([
-            playButton.widthAnchor.constraint(equalToConstant: 30),
-            heightAnchor.constraint(equalToConstant: 49),
+            playButton.widthAnchor.constraint(equalToConstant: 40),
+            playbackRateButton.widthAnchor.constraint(equalToConstant: 40),
+            definitionButton.widthAnchor.constraint(equalToConstant: 40),
+            audioSwitchButton.widthAnchor.constraint(equalToConstant: 40),
+            videoSwitchButton.widthAnchor.constraint(equalToConstant: 40),
+            pipButton.widthAnchor.constraint(equalToConstant: 40),
             srtButton.widthAnchor.constraint(equalToConstant: 40),
+            heightAnchor.constraint(equalToConstant: 49)
         ])
         #endif
+
+        setNeedsUpdateConstraints()
     }
     @objc func timeTapped() {
         isReminingTime.toggle()
@@ -253,7 +269,6 @@ public class PlayerToolBar: UIStackView {
         }
     }
 
-
     override public func addArrangedSubview(_ view: UIView) {
         super.addArrangedSubview(view)
         view.isHidden = false
@@ -267,8 +282,7 @@ public class PlayerToolBar: UIStackView {
                 nextFocusedButton.tintColor = nextFocusedButton.titleColor(for: .focused)
             }
             if context.previouslyFocusedItem != nil,
-               let nextFocusedView = nextFocusedItem as? UIView
-            {
+               let nextFocusedView = nextFocusedItem as? UIView {
                 onFocusUpdate?(nextFocusedView)
             }
         }

@@ -118,7 +118,7 @@ open class VideoPlayerView: PlayerView {
                     playerLayer.topAnchor.constraint(equalTo: topAnchor),
                     playerLayer.leadingAnchor.constraint(equalTo: leadingAnchor),
                     playerLayer.bottomAnchor.constraint(equalTo: bottomAnchor),
-                    playerLayer.trailingAnchor.constraint(equalTo: trailingAnchor),
+                    playerLayer.trailingAnchor.constraint(equalTo: trailingAnchor)
                 ])
             }
         }
@@ -425,8 +425,8 @@ extension VideoPlayerView {
             }
         }
         let videoTracks = playerLayer?.player.tracks(mediaType: .video) ?? []
-        toolBar.videoSwitchButton.setMenu(title: NSLocalizedString("switch video", comment: ""), current: videoTracks.first(where: { $0.isEnabled }), list: videoTracks) { value in
-            let language : String = (value.language.map { "\($0) - " }) ?? ""
+        toolBar.videoSwitchButton.setMenu(title: NSLocalizedString("Switch video", comment: ""), current: videoTracks.first(where: { $0.isEnabled }), list: videoTracks) { value in
+            let language: String = (value.language.map { "\($0) - " }) ?? ""
             return "\(value.trackID) - \(language)\(value.description)"
         } completition: { [weak self] value in
             guard let self else { return }
@@ -435,8 +435,8 @@ extension VideoPlayerView {
             }
         }
         let audioTracks = playerLayer?.player.tracks(mediaType: .audio) ?? []
-        toolBar.audioSwitchButton.setMenu(title: NSLocalizedString("switch audio", comment: ""), current: audioTracks.first(where: { $0.isEnabled }), list: audioTracks) { value in
-            let language : String = (value.language.map { "\($0) - " }) ?? ""
+        toolBar.audioSwitchButton.setMenu(title: NSLocalizedString("Switch audio", comment: ""), current: audioTracks.first(where: { $0.isEnabled }), list: audioTracks) { value in
+            let language: String = (value.language.map { "\($0) - " }) ?? ""
             return "\(value.trackID) - \(language)\(value.description)"
         } completition: { [weak self] value in
             guard let self else { return }
@@ -444,7 +444,7 @@ extension VideoPlayerView {
                 self.playerLayer?.player.select(track: value)
             }
         }
-        toolBar.playbackRateButton.setMenu(title: NSLocalizedString("speed", comment: ""), current: playerLayer?.player.playbackRate ?? 1, list: [0.75, 1.0, 1.25, 1.5, 2.0]) { value in
+        toolBar.playbackRateButton.setMenu(title: NSLocalizedString("Speed", comment: ""), current: playerLayer?.player.playbackRate ?? 1, list: [0.75, 1.0, 1.25, 1.5, 2.0]) { value in
             "\(value) x"
         } completition: { [weak self] value in
             guard let self else { return }
@@ -452,7 +452,7 @@ extension VideoPlayerView {
                 self.playerLayer?.player.playbackRate = value
             }
         }
-        toolBar.srtButton.setMenu(title: NSLocalizedString("subtitle", comment: ""), current: srtControl.selectedSubtitleInfo, list: srtControl.subtitleInfos, addDisabled: true) { value in
+        toolBar.srtButton.setMenu(title: NSLocalizedString("Subtitles", comment: ""), current: srtControl.selectedSubtitleInfo, list: srtControl.subtitleInfos, addDisabled: true) { value in
             value.subtitleID + " - " + value.name
         } completition: { [weak self] value in
             guard let self else { return }
@@ -649,7 +649,7 @@ extension VideoPlayerView {
             subtitleLabel.leadingAnchor.constraint(equalTo: subtitleBackView.leadingAnchor, constant: 10),
             subtitleLabel.trailingAnchor.constraint(equalTo: subtitleBackView.trailingAnchor, constant: -10),
             subtitleLabel.topAnchor.constraint(equalTo: subtitleBackView.topAnchor, constant: 2),
-            subtitleLabel.bottomAnchor.constraint(equalTo: subtitleBackView.bottomAnchor, constant: -2),
+            subtitleLabel.bottomAnchor.constraint(equalTo: subtitleBackView.bottomAnchor, constant: -2)
         ])
     }
 
@@ -689,9 +689,6 @@ extension VideoPlayerView {
             #endif
         }
         bottomMaskView.addSubview(toolBar.timeSlider)
-        toolBar.audioSwitchButton.isHidden = true
-        toolBar.videoSwitchButton.isHidden = true
-        toolBar.pipButton.isHidden = true
         contentOverlayView.translatesAutoresizingMaskIntoConstraints = false
         controllerView.translatesAutoresizingMaskIntoConstraints = false
         toolBar.timeSlider.translatesAutoresizingMaskIntoConstraints = false
@@ -733,7 +730,7 @@ extension VideoPlayerView {
             replayButton.centerYAnchor.constraint(equalTo: centerYAnchor),
             replayButton.centerXAnchor.constraint(equalTo: centerXAnchor),
             lockButton.leadingAnchor.constraint(equalTo: safeLeadingAnchor, constant: 22),
-            lockButton.centerYAnchor.constraint(equalTo: centerYAnchor),
+            lockButton.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
 
         configureToolBarConstraints()
@@ -763,7 +760,7 @@ extension VideoPlayerView {
             toolBar.timeSlider.bottomAnchor.constraint(equalTo: toolBar.topAnchor, constant: -8),
             toolBar.timeSlider.leadingAnchor.constraint(equalTo: bottomMaskView.safeLeadingAnchor, constant: 15),
             toolBar.timeSlider.trailingAnchor.constraint(equalTo: bottomMaskView.safeTrailingAnchor, constant: -15),
-            toolBar.timeSlider.heightAnchor.constraint(equalToConstant: 16),
+            toolBar.timeSlider.heightAnchor.constraint(equalToConstant: 16)
         ])
 
         #else
@@ -776,7 +773,6 @@ extension VideoPlayerView {
         toolBar.srtButton.tintColor = .white
         toolBar.pipButton.tintColor = .white
 
-        toolBar.spacing = 10
         toolBar.addArrangedSubview(toolBar.playButton)
         toolBar.addArrangedSubview(toolBar.timeLabel)
         toolBar.addArrangedSubview(toolBar.playbackRateButton)
@@ -786,11 +782,6 @@ extension VideoPlayerView {
         toolBar.addArrangedSubview(toolBar.srtButton)
         toolBar.addArrangedSubview(toolBar.pipButton)
 
-        toolBar.setCustomSpacing(20, after: toolBar.timeLabel)
-        toolBar.setCustomSpacing(20, after: toolBar.playbackRateButton)
-        toolBar.setCustomSpacing(20, after: toolBar.definitionButton)
-        toolBar.setCustomSpacing(20, after: toolBar.srtButton)
-
         NSLayoutConstraint.activate([
             toolBar.bottomAnchor.constraint(equalTo: bottomMaskView.safeBottomAnchor),
             toolBar.leadingAnchor.constraint(equalTo: bottomMaskView.safeLeadingAnchor, constant: 10),
@@ -798,7 +789,7 @@ extension VideoPlayerView {
             toolBar.timeSlider.bottomAnchor.constraint(equalTo: toolBar.topAnchor),
             toolBar.timeSlider.leadingAnchor.constraint(equalTo: bottomMaskView.safeLeadingAnchor, constant: 15),
             toolBar.timeSlider.trailingAnchor.constraint(equalTo: bottomMaskView.safeTrailingAnchor, constant: -15),
-            toolBar.timeSlider.heightAnchor.constraint(equalToConstant: 30),
+            toolBar.timeSlider.heightAnchor.constraint(equalToConstant: 30)
         ])
         #endif
     }
@@ -942,8 +933,7 @@ extension UIView {
             constraint.firstItem === self
         } ?? [NSLayoutConstraint]()
         for constraint in constraints where
-            constraint.isMember(of: NSLayoutConstraint.self) && constraint.firstItem === self && (constraint.firstAttribute == .width || constraint.firstAttribute == .height)
-        {
+            constraint.isMember(of: NSLayoutConstraint.self) && constraint.firstItem === self && (constraint.firstAttribute == .width || constraint.firstAttribute == .height) {
             frameConstraint.append(constraint)
         }
         return frameConstraint

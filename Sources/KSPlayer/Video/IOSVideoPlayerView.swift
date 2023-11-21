@@ -72,16 +72,16 @@ open class IOSVideoPlayerView: VideoPlayerView {
             maskImageView.bottomAnchor.constraint(equalTo: bottomAnchor),
             maskImageView.trailingAnchor.constraint(equalTo: trailingAnchor),
             backButton.widthAnchor.constraint(equalToConstant: 25),
-            landscapeButton.widthAnchor.constraint(equalToConstant: 30),
+            landscapeButton.widthAnchor.constraint(equalToConstant: 40),
             airplayStatusView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            airplayStatusView.centerYAnchor.constraint(equalTo: centerYAnchor),
+            airplayStatusView.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
         #if !os(xrOS)
         routeButton.isHidden = true
         navigationBar.addArrangedSubview(routeButton)
         routeButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            routeButton.widthAnchor.constraint(equalToConstant: 25),
+            routeButton.widthAnchor.constraint(equalToConstant: 25)
         ])
         #endif
         addNotification()
@@ -142,7 +142,7 @@ open class IOSVideoPlayerView: VideoPlayerView {
                 topAnchor.constraint(equalTo: fullVC.view.readableTopAnchor),
                 leadingAnchor.constraint(equalTo: fullVC.view.leadingAnchor),
                 trailingAnchor.constraint(equalTo: fullVC.view.trailingAnchor),
-                bottomAnchor.constraint(equalTo: fullVC.view.bottomAnchor),
+                bottomAnchor.constraint(equalTo: fullVC.view.bottomAnchor)
             ])
             fullVC.modalPresentationStyle = .fullScreen
             fullVC.modalPresentationCapturesStatusBarAppearance = true
@@ -335,7 +335,7 @@ public class AirplayStatusView: UIView {
             airplaymessage.bottomAnchor.constraint(equalTo: bottomAnchor),
             airplaymessage.leadingAnchor.constraint(equalTo: leadingAnchor),
             airplaymessage.trailingAnchor.constraint(equalTo: trailingAnchor),
-            airplaymessage.heightAnchor.constraint(equalToConstant: 15),
+            airplaymessage.heightAnchor.constraint(equalToConstant: 15)
         ])
         isHidden = true
     }

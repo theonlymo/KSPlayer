@@ -35,31 +35,36 @@ public class FFmpegAssetTrack: MediaPlayerTrack {
     public let formatDescription: CMFormatDescription?
     var closedCaptionsTrack: FFmpegAssetTrack?
     let isConvertNALSize: Bool
+    var codecSubtitle: String?
+
     public var description: String {
-        var description = codecName
-        if let formatName {
-            description += ", \(formatName)"
+        var description = ""
+
+        if let language {
+            description += language + " - "
         }
-        if bitsPerRawSample > 0 {
-            description += "(\(bitsPerRawSample.kmFormatted) bit)"
+    
+        if !codecName.isEmpty {
+            description += "\(codecName.localizedCapitalized) "
         }
         if let audioDescriptor {
-            description += ", \(audioDescriptor.sampleRate)Hz"
-            description += ", \(audioDescriptor.channel.description)"
+            description += "\(audioDescriptor.channel.description) "
         }
+
+        if let codecSubtitle {
+            description += "(\(codecSubtitle.localizedCapitalized))"
+        }
+        
         if let formatDescription {
             if mediaType == .video {
                 let naturalSize = formatDescription.naturalSize
                 description += ", \(Int(naturalSize.width))x\(Int(naturalSize.height))"
-                description += String(format: ", %.2f fps", nominalFrameRate)
+                description += String(format: ", %.0f fps", nominalFrameRate)
             }
         }
-        if bitRate > 0 {
-            description += ", \(bitRate.kmFormatted)bps"
-        }
-
         return description
     }
+    
 
     convenience init?(stream: UnsafeMutablePointer<AVStream>) {
         let codecpar = stream.pointee.codecpar.pointee
@@ -125,7 +130,7 @@ public class FFmpegAssetTrack: MediaPlayerTrack {
         if let descriptor = avcodec_descriptor_get(codecpar.codec_id) {
             codecName += String(cString: descriptor.pointee.name)
             if let profile = descriptor.pointee.profiles {
-                codecName += " (\(String(cString: profile.pointee.name)))"
+                codecSubtitle = String(cString: profile.pointee.name)
             }
         } else {
             codecName = ""
