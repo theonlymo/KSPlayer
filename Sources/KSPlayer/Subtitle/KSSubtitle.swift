@@ -328,8 +328,14 @@ open class SubtitleModel: ObservableObject {
         if newParts != parts {
             newParts.forEach { part in
                 if let text = part.text as? NSMutableAttributedString {
-                    text.addAttributes([.font: SubtitleModel.textFont, .foregroundColor: SubtitleModel.textColor],
-                                       range: NSRange(location: 0, length: text.length))
+                    if #available(iOS 14.0, *) {
+                        text.addAttributes(
+                            [
+                                .font: SubtitleModel.textFont,
+                                .foregroundColor: UIColor(SubtitleModel.textColor)
+                            ],
+                            range: NSRange(location: 0, length: text.length))
+                    }
                 }
             }
             parts = newParts
