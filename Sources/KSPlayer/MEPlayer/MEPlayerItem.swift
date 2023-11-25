@@ -107,7 +107,7 @@ final class MEPlayerItem {
                     let context = ptr.assumingMemoryBound(to: URLContext.self).pointee
                     if let opaque = context.interrupt_callback.opaque {
                         let playerItem = Unmanaged<MEPlayerItem>.fromOpaque(opaque).takeUnretainedValue()
-                        playerItem.options.io(log: log)
+                        playerItem.options.urlIO(log: String(log))
                         if log.starts(with: "Will reconnect at") {
                             let seconds = playerItem.mainClock().positionTime.seconds
                             playerItem.videoTrack?.seekTime = seconds
@@ -254,7 +254,7 @@ extension MEPlayerItem {
             videoClock.positionTime = startTime
             audioClock.positionTime = startTime
         }
-        duration = TimeInterval(max(formatCtx.pointee.duration, 0) * 100 / Int64(AV_TIME_BASE)) / 100.0
+        duration = TimeInterval(max(formatCtx.pointee.duration, 0) / Int64(AV_TIME_BASE))
         fileSize = Double(formatCtx.pointee.bit_rate) * duration / 8
         createCodec(formatCtx: formatCtx)
         if let outputURL = options.outputURL {

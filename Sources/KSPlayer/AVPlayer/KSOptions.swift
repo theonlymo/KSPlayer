@@ -110,9 +110,10 @@ open class KSOptions {
         formatContextOptions["scan_all_pmts"] = 1
         formatContextOptions["auto_convert"] = 0
         formatContextOptions["fps_probe_size"] = 3
+        formatContextOptions["protocol_whitelist"] = "file,http,https,tcp,tls,crypto,async,cache,data,httpproxy"
 //        formatContextOptions["max_analyze_duration"] = 300 * 1000
         formatContextOptions["reconnect"] = 1
-        // 开启这个，纯ipv6地址会无法播放。
+        // 开启这个，纯ipv6地址会无法播放。并且有些视频结束了，但还会一直尝试重连。所以这个值默认不设置
 //        formatContextOptions["reconnect_at_eof"] = 1
         formatContextOptions["reconnect_streamed"] = 1
         // 开启这个，会导致tcp Failed to resolve hostname 还会一直重试
@@ -250,7 +251,7 @@ open class KSOptions {
         display == .plane
     }
 
-    open func io(log: String) {
+    open func urlIO(log: String) {
         if log.starts(with: "Original list of addresses"), dnsStartTime == 0 {
             dnsStartTime = CACurrentMediaTime()
         } else if log.starts(with: "Starting connection attempt to"), tcpStartTime == 0 {
