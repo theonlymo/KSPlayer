@@ -322,7 +322,11 @@ open class KSOptions {
                 var yadifMode = KSOptions.yadifMode
                 if let assetTrack = assetTrack as? FFmpegAssetTrack {
                     if assetTrack.realFrameRate.num == 2 * assetTrack.avgFrameRate.num, assetTrack.realFrameRate.den == assetTrack.avgFrameRate.den {
-                        yadifMode = 0
+                        if yadifMode == 1 {
+                            yadifMode = 0
+                        } else if yadifMode == 3 {
+                            yadifMode = 2
+                        }
                     }
                 }
                 videoFilters.append("\(yadif)=mode=\(yadifMode):parity=-1:deint=1")
@@ -472,6 +476,7 @@ public extension KSOptions {
     static var asynchronousDecompression = false
     static var isPipPopViewController = false
     static var canStartPictureInPictureAutomaticallyFromInline = true
+    static var preferredFrame = true
     static var displayCriteriaFormatDescriptionEnabled = false
     /// 日志级别
     static var logLevel = LogLevel.warning
