@@ -40,9 +40,11 @@ pod install
 - Open Demo/Demo.xcworkspace with Xcode.
 
 
-## Testflight
+## TestFlight
 
 https://testflight.apple.com/join/eNmYbmZN
+
+App Store https://apps.apple.com/app/tracyplayer/id6450770064
 
 ## Quick Start
 
@@ -272,7 +274,7 @@ Become a sponsor through [GitHub Sponsors](https://github.com/sponsors/kingslay/
 
 Your user icon or company logo shows up this with a link to your home page. 
 
-[UnknownCoder807](https://github.com/UnknownCoder807)   [skrew](https://github.com/skrew)   [Kimentanm](https://github.com/Kimentanm)   [nakiostudio](https://github.com/nakiostudio)    [byMohamedali](https://github.com/byMohamedali)
+[UnknownCoder807](https://github.com/UnknownCoder807)   [skrew](https://github.com/skrew)   [Kimentanm](https://github.com/Kimentanm)   [nakiostudio](https://github.com/nakiostudio)    [byMohamedali](https://github.com/byMohamedali) [pcccccc](https://github.com/pcccccc)
 
 Thanks to [nightfall708](https://github.com/nightfall708) for sponsoring a mac mini
 
@@ -282,6 +284,9 @@ Thanks to [skrew](https://github.com/skrew) and LillyPlayer community for sponso
 
 ## Communication
 
-![1](https://github.com/kingslay/KSPlayer/raw/develop/Documents/Sponsors.jpg)
+If you have a business cooperation project or want to initiate a paid consultation, you can contact me via email
 
 - Email : kingslay@icloud.com
+
+![1](https://github.com/kingslay/KSPlayer/raw/develop/Documents/Sponsors.jpg)
+
