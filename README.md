@@ -61,8 +61,8 @@ Make sure to use the latest version **cocoapods 1.10.1+**, which can be installe
 ```ruby
 target 'ProjectName' do
     use_frameworks!
-    pod 'KSPlayer',:git => 'https://github.com/kingslay/KSPlayer.git', :branch => 'develop'
-    pod 'DisplayCriteria',:git => 'https://github.com/kingslay/KSPlayer.git', :branch => 'develop'
+    pod 'KSPlayer',:git => 'https://github.com/kingslay/KSPlayer.git', :branch => 'main'
+    pod 'DisplayCriteria',:git => 'https://github.com/kingslay/KSPlayer.git', :branch => 'main'
     pod 'FFmpegKit',:git => 'https://github.com/kingslay/FFmpegKit.git', :branch => 'main'
     pod 'Libass',:git => 'https://github.com/kingslay/FFmpegKit.git', :branch => 'main'
 end
@@ -72,7 +72,7 @@ end
 
 ```swift
 dependencies: [
-    .package(url: "https://github.com/kingslay/KSPlayer.git", .branch("develop"))
+    .package(url: "https://github.com/kingslay/KSPlayer.git", .branch("main"))
 ]
 ```
 
@@ -280,7 +280,13 @@ Become a sponsor through [GitHub Sponsors](https://github.com/sponsors/kingslay/
 
 Your user icon or company logo shows up this with a link to your home page. 
 
-[UnknownCoder807](https://github.com/UnknownCoder807)   [skrew](https://github.com/skrew)   [Kimentanm](https://github.com/Kimentanm)   [nakiostudio](https://github.com/nakiostudio)    [byMohamedali](https://github.com/byMohamedali) [pcccccc](https://github.com/pcccccc)
+[UnknownCoder807](https://github.com/UnknownCoder807)
+[skrew](https://github.com/skrew)   
+[Kimentanm](https://github.com/Kimentanm)
+[nakiostudio](https://github.com/nakiostudio)
+[byMohamedali](https://github.com/byMohamedali)
+[pcccccc](https://github.com/pcccccc) 
+[hippiefox](https://github.com/hippiefox)
 
 Thanks to [nightfall708](https://github.com/nightfall708) for sponsoring a mac mini
 
