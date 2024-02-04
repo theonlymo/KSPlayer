@@ -354,7 +354,13 @@ public extension [String: String] {
 
 public class VTTParse: KSParseProtocol {
     public func canParse(scanner: Scanner) -> Bool {
-        scanner.scanString("WEBVTT") != nil
+        let result = scanner.scanString("WEBVTT")
+        if result != nil {
+            scanner.charactersToBeSkipped = nil
+            return true
+        } else {
+            return false
+        }
     }
 
     /**
@@ -362,12 +368,29 @@ public class VTTParse: KSParseProtocol {
      简中封装 by Q66
      */
     public func parsePart(scanner: Scanner) -> SubtitlePart? {
-        let startString = scanner.scanUpToString(" --> ")?.components(separatedBy: "\n").last
+        var decimal: String?
+        repeat {
+            decimal = scanner.scanUpToCharacters(from: .newlines)
+            _ = scanner.scanCharacters(from: .newlines)
+        } while decimal.flatMap(Int.init) == nil
+        let startString = scanner.scanUpToString("-->")
+        // skip spaces and newlines by default.
         _ = scanner.scanString("-->")
         if let startString,
-           let endString = scanner.scanUpToCharacters(from: .newlines),
-           let text = scanner.scanUpToString("\n\n")
+           let endString = scanner.scanUpToCharacters(from: .newlines)
         {
+            _ = scanner.scanCharacters(from: .newlines)
+            var text = ""
+            var newLine: String? = nil
+            repeat {
+                if let str = scanner.scanUpToCharacters(from: .newlines) {
+                    text += str
+                }
+                newLine = scanner.scanCharacters(from: .newlines)
+                if newLine == "\n" || newLine == "\r\n" {
+                    text += "\n"
+                }
+            } while newLine == "\n" || newLine == "\r\n"
             var textPosition = TextPosition()
             return SubtitlePart(startString.parseDuration(), endString.parseDuration(), attributedString: text.build(textPosition: &textPosition))
         }
@@ -390,8 +413,11 @@ public class SrtParse: KSParseProtocol {
      {\an4}慢慢来
      */
     public func parsePart(scanner: Scanner) -> SubtitlePart? {
-        _ = scanner.scanDecimal()
-        _ = scanner.scanCharacters(from: .newlines)
+        var decimal: String?
+        repeat {
+            decimal = scanner.scanUpToCharacters(from: .newlines)
+            _ = scanner.scanCharacters(from: .newlines)
+        } while decimal.flatMap(Int.init) == nil
         let startString = scanner.scanUpToString("-->")
         // skip spaces and newlines by default.
         _ = scanner.scanString("-->")
