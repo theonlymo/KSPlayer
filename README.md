@@ -19,11 +19,12 @@ English | [简体中文](./README_CN.md)
 - [x] Multiple audio/video tracks.
 - [x] hardware accelerator.
 - [x] 4k/HDR/HDR10/HDR10+/Dolby Vision
-- [x] text subtitle/Closed Captions/image subtitle(dvbsub/dvdsub/pgssub)
+- [x] show local and online subtitles(shooter/assrt/opensubtitles).
+- [x] text subtitle(srt/vtt/ass)/Closed Captions/image subtitle(dvbsub/dvdsub/pgssub)
 - [x] Picture in Picture
 - [x] Record video
 - [x] De-interlace auto detect
-- [x] Spatial Audio 
+- [x] Dolby Atmos/Spatial Audio 
 - [x] 360° panorama video.
 - [x] libsmbclient protocol
 
@@ -42,9 +43,9 @@ pod install
 
 ## TestFlight
 
-https://testflight.apple.com/join/eNmYbmZN
+[APPStore](https://apps.apple.com/app/tracyplayer/id6450770064)
 
-App Store https://apps.apple.com/app/tracyplayer/id6450770064
+[TestFlight](https://testflight.apple.com/join/eNmYbmZN)
 
 ## License
 KSPlayer defaults to the GPL license (requires open-sourcing your own project code), and we hope everyone will consciously respect the licensing agreement of the KSPlayer project. Additionally, there is a paid version that adopts the LGPL license (contact us). 
@@ -284,9 +285,8 @@ Your user icon or company logo shows up this with a link to your home page.
 [skrew](https://github.com/skrew)   
 [Kimentanm](https://github.com/Kimentanm)
 [nakiostudio](https://github.com/nakiostudio)
-[byMohamedali](https://github.com/byMohamedali)
-[pcccccc](https://github.com/pcccccc) 
-[hippiefox](https://github.com/hippiefox)
+[andrefmsilva](https://github.com/andrefmsilva)
+[CodingByJerez](https://github.com/CodingByJerez)
 
 Thanks to [nightfall708](https://github.com/nightfall708) for sponsoring a mac mini
 
