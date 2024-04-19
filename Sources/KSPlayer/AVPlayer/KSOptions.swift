@@ -38,6 +38,7 @@ open class KSOptions {
      */
     public var seekFlags = Int32(1)
     // ffmpeg only cache http
+    // 这个开关不能用，因为ff_tempfile: Cannot open temporary file
     public var cache = false
     //  record stream
     public var outputURL: URL?
@@ -116,7 +117,8 @@ open class KSOptions {
         formatContextOptions["reconnect"] = 1
         formatContextOptions["reconnect_streamed"] = 1
         // 这个是用来开启http的链接复用（keep-alive）。vlc默认是打开的，所以这边也默认打开。
-        formatContextOptions["multiple_requests"] = 1
+        //开启这个，百度网盘的视频链接无法播放
+        //formatContextOptions["multiple_requests"] = 1
         // 下面是用来处理秒开的参数，有需要的自己打开。默认不开，不然在播放某些特殊的ts直播流会频繁卡顿。
 //        formatContextOptions["auto_convert"] = 0
 //        formatContextOptions["fps_probe_size"] = 3
@@ -357,13 +359,10 @@ open class KSOptions {
     }
 
     open func videoClockSync(main: KSClock, nextVideoTime: TimeInterval, fps: Float, frameCount: Int) -> (Double, ClockProcessType) {
-        var desire = main.getTime() - videoDelay
-        #if !os(macOS)
-        desire -= AVAudioSession.sharedInstance().outputLatency
-        #endif
+        let desire = main.getTime() - videoDelay
         let diff = nextVideoTime - desire
 //        print("[video] video diff \(diff) nextVideoTime \(nextVideoTime) main \(main.time.seconds)")
-        if diff >= 1 / Double(fps * 2) {
+        if diff >= 1 / Double(max(fps * 2, 100)) {
             videoClockDelayCount = 0
             return (diff, .remain)
         } else {
@@ -480,6 +479,7 @@ public extension KSOptions {
     static var canStartPictureInPictureAutomaticallyFromInline = true
     static var preferredFrame = true
     static var displayCriteriaFormatDescriptionEnabled = false
+    static var useSystemHTTPProxy = true
     /// 日志级别
     static var logLevel = LogLevel.warning
     static var logger: LogHandler = OSLog(lable: "KSPlayer")

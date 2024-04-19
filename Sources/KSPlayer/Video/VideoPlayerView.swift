@@ -663,7 +663,7 @@ extension VideoPlayerView {
                                       execute: delayItem!)
     }
 
-    private func showLoader() {
+    public func showLoader() {
         loadingIndector.isHidden = false
         loadingIndector.startAnimating()
     }
