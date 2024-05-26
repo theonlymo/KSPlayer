@@ -13,7 +13,7 @@ jobs:
     steps:
       - uses: actions/checkout@main
         with:
-          submodules: 'true'
+          submodules: recursive
 #      https://github.com/actions/runner-images/blob/main/images/macos/macos-13-Readme.md#xcode
       - name: Set up Xcode
         run: |
