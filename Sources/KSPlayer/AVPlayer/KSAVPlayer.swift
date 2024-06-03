@@ -470,7 +470,7 @@ extension KSAVPlayer: MediaPlayerProtocol {
     }
 
     public var seekable: Bool {
-        !(player.currentItem?.seekableTimeRanges.isEmpty ?? true)
+        !(player.currentItem?.seekableTimeRanges.isEmpty ?? false)
     }
 
     public var isMuted: Bool {
