@@ -7,30 +7,70 @@ KSPlayer is a powerful media play framework for iOS, tvOS, macOS, xrOS, visionOS
 
 English | [简体中文](./README_CN.md)
 
-## Based On
-
-- FFmpeg
-- Metal
-- AVAudioEngine
-
 ## Features
+Functional differences between GPL version and LGPL version
+Feature       | LGPL      | GPL     |
+| ----------- | ----------- | ----------- |
+|Dolby AC-4|✅|❌|
+|AV1 hardware decoding|✅|❌|
+|All demuxers, All decoders|✅|❌|
+|Record video clips at any time|✅|❌|
+|Smoothly Play 8K or 120 FPS Video|✅|❌|
+|Dovi P5 displays HDR (not overheating)|✅|❌|
+|Live streaming supports rewind viewing|✅|❌|
+|Picture in Picture supports subtitle display|✅|❌|
+|Blu-ray disc playback on all Apple platforms|✅|❌|
+|Annex-B async hardware decoding(Live Stream)|✅|❌|
+|Use the fonts in the video to render subtitles|✅|❌|
+|Use memory cache for fast seek in short time range|✅|❌|
+|Cache data to Hard Drive,Preload data to Hard Drive|✅|❌|
+|Play videos in a small window in the app (iOS, tvOS)|✅|❌|
+|Offline AI real-time subtitle generation and translation|✅|❌|
+|Full display of ass subtitles effect(Render as image using libass)|✅|❌|
+|Play videos in a small window in the App (resumable, supports tvos and ios)|✅|❌|
+|FFmpeg version|7.0.2|6.1.0|
+|Record video|✅|✅|
+|360° panorama video|✅|✅|
+|Picture in Picture|✅|✅|
+|Hardware accelerator|✅|✅|
+|Seamless loop playback|✅|✅|
+|De-interlace auto detect|✅|✅|
+|4k/HDR/HDR10/HDR10+/Dolby Vision|✅|✅|
+|Custom url protocols such as nfs/smb/UPnP |✅|✅|
+|Multichannel Audio/Spatial Audio|✅|✅|
+|Text subtitle/Image subtitle/Closed Captions|✅|✅|
+|Search Online Subtitles(shooter/assrt/opensubtitles)|✅|✅|
+|Low latency 4K live video streaming (less than 200ms on LAN)|✅|✅|
+|Automatically switch to multi-bitrate streams based on network|✅|✅|
 
-- [x] iOS, tvOS, macOS, visionOS, Mac Catalyst, Apple Silicon M1, SwiftUI.
-- [x] Multiple audio/video tracks.
-- [x] hardware accelerator.
-- [x] 4k/HDR/HDR10/HDR10+/Dolby Vision
-- [x] show local and online subtitles(shooter/assrt/opensubtitles).
-- [x] text subtitle(srt/vtt/ass)/Closed Captions/image subtitle(dvbsub/dvdsub/pgssub)
-- [x] Picture in Picture
-- [x] Record video
-- [x] De-interlace auto detect
-- [x] Dolby Atmos/Spatial Audio 
-- [x] 360° panorama video.
-- [x] Custom url protocols such as smb nfs.
+## The list of App using this SDK
+App Store Link| Logo |
+| ----------- | ----------- |
+|[Alplayer](https://apps.apple.com/us/app/alplayer/id1660917007)||
+|[APTV](https://apps.apple.com/app/aptv/id1630403500)||
+|[homeTV IPTV Player](https://apps.apple.com/app/hometv-iptv-player/id1636701357)||
+|[IPTV +](https://apps.apple.com/app/iptv-my-smart-iptv-player/id1525121231)||
+|[LillyPlayer Video Player](https://apps.apple.com/app/lillyplayer-video-player/id1446967273)||
+|[SenPlayer](https://apps.apple.com/app/senplayer-hdr-media-player/id6443975850)||
+|[Smart IPTV](https://apps.apple.com/app/smart-iptv-tv-and-movies-ott/id1492738910)||
+|[Snappier IPTV](https://apps.apple.com/app/snappier-iptv/id1579702567)||
+|[Spatial Video Studio](https://apps.apple.com/app/id6523429904)||
+|[SWIPTV - IPTV Smart Player](https://apps.apple.com/app/swiptv-iptv-smart-player/id1658538188)||
+|[TracyPlayer](https://apps.apple.com/app/tracyplayer/id6450770064)||
+|[UHF - Love your IPTV](https://apps.apple.com/app/uhf-love-your-iptv/id6443751726)|![logo](https://uhf-web.vercel.app/uhfsponsor.png)|
+|[Zen IPTV](https://apps.apple.com/fr/app/zen-iptv/id6458223193)||
+
+
+
+## License
+KSPlayer defaults to the GPL license (requires open-sourcing your own project code), and we hope everyone will consciously respect the licensing agreement of the KSPlayer project. Additionally, there is a paid version that adopts the LGPL license (contact us). 
+
+If due to commercial reasons, you prefer not to adhere to the GPL license  or the LGPL license, you can contact us. Through our authorization, you can obtain a more flexible licensing agreement. Email: kingslay@icloud.com
+
 
 ## Requirements
 
-- iOS 13 +,  macOS 10.15 +, tvOS 13 +, xrOS 1 +
+- iOS 13+, macOS 10.15+, tvOS 13+, xrOS 1+
 
 ## Demo
 
@@ -39,19 +79,6 @@ cd Demo
 pod install
 ```
 - Open Demo/Demo.xcworkspace with Xcode.
-
-
-## TestFlight
-
-[APPStore](https://apps.apple.com/app/tracyplayer/id6450770064)
-
-[TestFlight](https://testflight.apple.com/join/eNmYbmZN)
-
-## License
-KSPlayer defaults to the GPL license (requires open-sourcing your own project code), and we hope everyone will consciously respect the licensing agreement of the KSPlayer project. Additionally, there is a paid version that adopts the LGPL license (contact us). 
-
-If due to commercial reasons, you prefer not to adhere to the GPL license  or the LGPL license, you can contact us. Through our authorization, you can obtain a more flexible licensing agreement.
-
 
 ## Quick Start
 
@@ -77,11 +104,9 @@ dependencies: [
 ]
 ```
 
-
-
 ## Usage
 
-#### initialize
+#### Initialization
 
 ```swift
 KSOptions.secondPlayerType = KSMEPlayer.self
@@ -280,17 +305,22 @@ project by becoming a sponsor.
 Become a sponsor through [GitHub Sponsors](https://github.com/sponsors/kingslay/). :heart:
 
 Your user icon or company logo shows up this with a link to your home page. 
+Name| Logo |
+| ----------- | ----------- |
+|[UnknownCoder807](https://github.com/UnknownCoder807)||
+|[skrew](https://github.com/skrew)||
+|[Kimentanm](https://github.com/Kimentanm)||
+|[byMohamedali](https://github.com/byMohamedali)||
+|[nakiostudio](https://github.com/nakiostudio)|![logo](https://uhf-web.vercel.app/uhfsponsor.png)|
+|[CodingByJerez](https://github.com/CodingByJerez)||
+|[andrefmsilva](https://github.com/andrefmsilva)||
+|[romaingyh](https://github.com/romaingyh)||
+|[FantasyKingdom](https://github.com/FantasyKingdom)||
+|[aart-rainey](https://github.com/aart-rainey)||
+|[nihalahmed](https://github.com/nihalahmed)||
+|[HatimDa](https://github.com/HatimDa)||
+|[johnil](https://github.com/johnil)||
 
-[UnknownCoder807](https://github.com/UnknownCoder807)
-[skrew](https://github.com/skrew)   
-[Kimentanm](https://github.com/Kimentanm)
-[nakiostudio](https://github.com/nakiostudio)
-[andrefmsilva](https://github.com/andrefmsilva)
-[CodingByJerez](https://github.com/CodingByJerez)
-[byMohamedali](https://github.com/byMohamedali)
-[romaingyh](https://github.com/romaingyh)
-[FantasyKingdom](https://github.com/FantasyKingdom)
-[solidusex](https://github.com/solidusex)
 
 Thanks to [nightfall708](https://github.com/nightfall708) for sponsoring a mac mini
 
@@ -304,5 +334,5 @@ If you have a business cooperation project or want to initiate a paid consultati
 
 - Email : kingslay@icloud.com
 
-![1](https://github.com/kingslay/KSPlayer/raw/develop/Documents/Sponsors.jpg)
+![1](./Documents/Sponsors.jpg)
 
