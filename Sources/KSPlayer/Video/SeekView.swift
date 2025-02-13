@@ -48,9 +48,9 @@ class SeekView: UIView {
     }
 
     #if canImport(AppKit)
-    var backgroundColor: UIColor? {
+    override var backgroundColor: UIColor? {
         get {
-            if let layer, let cgColor = layer.backgroundColor {
+            if let cgColor = layer.backgroundColor {
                 return UIColor(cgColor: cgColor)
             } else {
                 return nil
